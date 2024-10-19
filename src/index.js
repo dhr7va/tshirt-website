@@ -30,7 +30,7 @@ function Main() {
 
   return (
     <>
-      <App addToCart={addToCart} openModal={openModal} />
+      <App addToCart={addToCart} openModal={openModal} cartLength={cartItems.length} />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <h2>Cart Summary</h2>
         <ul>
