@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
 import AddProductsFort from "./Components/AddProductsForm";
 
 
-function App() {
+const App = () => {
+  const [products, setProducts] = useState([]);
+
+  const addProduct = (product) => {
+    setProducts([...products, product]);
+  }
   return (
-    <div className="App">
-      <AddProductsFort />
+    <div>
+      <h1>Tshirt Shop</h1>
+      <AddProductsFort addProduct={addProduct} />
     </div>
   );
 }

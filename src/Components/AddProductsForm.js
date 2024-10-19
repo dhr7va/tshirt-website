@@ -31,24 +31,36 @@ const AddProductForm = ({ addProduct }) => {
         <form onSubmit={handleSubmit}>
             <input
                 name="name"
+                value={formData.name}
+                onChange={handleInputChange}
                 placeholder="Tshirt Name"
                 required />
             <input
                 name="description"
+                value={formData.description}
+                onChange={handleInputChange}
                 placeholder="Description"
                 required />
             <input
                 name="price"
+                value={formData.price}
+                onChange={handleInputChange}
                 placeholder="Price"
                 required />
             <input
                 name="quantityL"
+                value={formData.quantityL}
+                onChange={handleInputChange}
                 placeholder="L Size"
                 required />
             <input name="quantityM"
+                value={formData.quantityM}
+                onChange={handleInputChange}
                 placeholder="M Size"
                 required />
             <input name="quantityS"
+                value={formData.quantityS}
+                onChange={handleInputChange}
                 placeholder="S Size"
                 required />
             <button type="submit">Add Product</button>
