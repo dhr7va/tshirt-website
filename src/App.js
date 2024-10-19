@@ -4,10 +4,9 @@ import ProductList from './Components/ProductList';
 import Cart from './Components/Cart';
 import './style.css';
 
-const App = () => {
+const App = ({ openModal }) => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
 
   const addProduct = (product) => {
     setProducts([...products, product]);
@@ -29,10 +28,9 @@ const App = () => {
       <h1>Tshirt Shop</h1>
       <AddProductsForm addProduct={addProduct} />
       <ProductList products={products} updateCart={updateCart} />
-      <button onClick={() => setModalOpen(true)}>Cart {cart.length}</button>
+      <button onClick={openModal}>Cart {cart.length}</button>
 
-      {modalOpen && <Cart cart={cart} closeModal={() => setModalOpen(false)} />}
-    </div>
+    </div >
   );
 };
 
