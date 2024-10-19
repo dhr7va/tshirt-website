@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AddProductsForm from './Components/AddProductsForm';
 import ProductList from './Components/ProductList';
-import Cart from './Components/Cart';
 import './style.css';
 
 const App = ({ openModal }) => {
