@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import AddProductsForm from './Components/AddProductsForm';
-import ProductList from './Components/ProductList';
+import AddProductsForm from './Components/Product/AddProductsForm';
+import ProductList from './Components/Product/ProductList';
+import Card from './Components/UI/Card';
 import './style.css';
 
 const App = ({ openModal, addToCart, cartLength }) => {
@@ -20,14 +21,20 @@ const App = ({ openModal, addToCart, cartLength }) => {
       setProducts(updatedProducts);
     }
   };
-  return (
-    <div>
-      <h1>Tshirt Shop</h1>
-      <AddProductsForm addProduct={addProduct} />
-      <ProductList products={products} updateCart={updateCart} />
-      <button onClick={openModal}>Cart {cartLength}</button>
 
-    </div >
+  return (
+    <Card className="app-wrapper">
+      <h1>Tshirt Shop</h1>
+      <Card>
+        <AddProductsForm addProduct={addProduct} />
+      </Card>
+      <Card>
+        <ProductList products={products} updateCart={updateCart} />
+      </Card>
+      <button className="cart-button" onClick={openModal}>
+        Cart {cartLength}
+      </button>
+    </Card>
   );
 };
 

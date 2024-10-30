@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import Modal from './Components/Modal';
 
-function Main() {
+function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
@@ -12,7 +12,9 @@ function Main() {
 
   const addToCart = (item) => {
     setCartItems((prevItems) => {
-      const itemIndex = prevItems.findIndex((cartItem) => cartItem.name === item.name);
+      const itemIndex = prevItems.findIndex(
+        (cartItem) => cartItem.name === item.name && cartItem.size === item.size
+      );
 
       if (itemIndex > -1) {
         const updatedItems = [...prevItems];
@@ -24,26 +26,32 @@ function Main() {
     });
   };
 
+  const cartLength = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   const calculateTotal = () => {
-    return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
   };
 
   return (
     <>
-      <App addToCart={addToCart} openModal={openModal} cartLength={cartItems.length} />
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2>Cart Summary</h2>
-        <ul>
-          {cartItems.map((item, index) => (
-            <li key={index}>
-              {item.name} - {item.quantity} x ${item.price} = ${item.quantity * item.price}
-            </li>
-          ))}
-        </ul>
-        <h3>Total: ${calculateTotal()}</h3>
-      </Modal>
+      <App addToCart={addToCart} openModal={openModal} cartLength={cartLength} />
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <h2>Cart Summary</h2>
+          <ul>
+            {cartItems.map((item, index) => (
+              <li key={index}>
+                {item.name} - Size: {item.size} - {item.quantity} x ${item.price} = $
+                {(item.quantity * item.price).toFixed(2)}
+              </li>
+            ))}
+          </ul>
+          <h3>Total: ${calculateTotal()}</h3>
+          <button onClick={closeModal}>Close</button>
+        </Modal>
+      )}
     </>
   );
 }
 
-ReactDOM.render(<Main />, document.getElementById('root'));
+ReactDOM.render(<Index />, document.getElementById('root'));

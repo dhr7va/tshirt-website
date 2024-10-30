@@ -5,9 +5,9 @@ const AddProductForm = ({ addProduct }) => {
         name: '',
         description: '',
         price: '',
-        quantityL: 0,
-        quantityM: 0,
-        quantityS: 0
+        quantityL: '',
+        quantityM: '',
+        quantityS: ''
     });
 
     const handleInputChange = (e) => {
@@ -21,9 +21,9 @@ const AddProductForm = ({ addProduct }) => {
             name: '',
             description: '',
             price: '',
-            quantityL: 0,
-            quantityM: 0,
-            quantityS: 0
+            quantityL: '',
+            quantityM: '',
+            quantityS: ''
         });
     };
 
