@@ -1,20 +1,24 @@
-import React from "react";
-import CartItem from "./CartItem";
+import React, { useContext } from 'react';
+import { CartContext } from '../../CartContext';
+import CartItem from './CartItem';
 
-const Cart = ({ cart, closeModal }) => {
+const Cart = ({ closeModal }) => {
+    const { cartItems, calculateTotal, removeFromCart } = useContext(CartContext);
+
     return (
         <div>
             <h2>Cart Items</h2>
-            {cart.length === 0 ? (
+            {cartItems.length === 0 ? (
                 <p>No items in the cart</p>
             ) : (
-                cart.map((item, idx) => (
+                cartItems.map((item, idx) => (
                     <CartItem key={idx} item={item} />
                 ))
             )}
+            <h3>Total: ${calculateTotal()}</h3>
             <button onClick={closeModal}>Close</button>
         </div>
     );
-}
+};
 
 export default Cart;
