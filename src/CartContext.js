@@ -21,11 +21,6 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const removeFromCart = (name, size) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => !(item.name === name && item.size === size))
-    );
-  };
 
   const cartLength = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -38,7 +33,6 @@ export const CartProvider = ({ children }) => {
       value={{
         cartItems,
         addToCart,
-        removeFromCart,
         cartLength,
         calculateTotal
       }}

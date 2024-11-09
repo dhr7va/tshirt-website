@@ -3,7 +3,7 @@ import { CartContext } from '../../CartContext';
 import CartItem from './CartItem';
 
 const Cart = ({ closeModal }) => {
-    const { cartItems, calculateTotal, removeFromCart } = useContext(CartContext);
+    const { cartItems, calculateTotal } = useContext(CartContext);
 
     return (
         <div>
