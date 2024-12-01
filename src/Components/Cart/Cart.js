@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import { CartContext } from '../../CartContext';
+import React from 'react';
 import CartItem from './CartItem';
+import { useCart } from '../../CartContext';
 
-const Cart = ({ closeModal }) => {
-    const { cartItems, calculateTotal } = useContext(CartContext);
+const Cart = () => {
+    const { cartItems, closeCartModal, incrementItem, decrementItem, handleProceed, calculateTotal } = useCart();
 
     return (
         <div>
@@ -12,11 +12,17 @@ const Cart = ({ closeModal }) => {
                 <p>No items in the cart</p>
             ) : (
                 cartItems.map((item, idx) => (
-                    <CartItem key={idx} item={item} />
+                    <CartItem
+                        key={idx}
+                        item={item}
+                        onIncrement={incrementItem}
+                        onDecrement={decrementItem}
+                    />
                 ))
             )}
             <h3>Total: ${calculateTotal()}</h3>
-            <button onClick={closeModal}>Close</button>
+            <button onClick={closeCartModal}>Close</button>
+            <button onClick={handleProceed}>Proceed</button>
         </div>
     );
 };

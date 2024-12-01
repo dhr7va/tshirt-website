@@ -1,19 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import AddProductsForm from './Components/Product/AddProductsForm';
 import ProductList from './Components/Product/ProductList';
 import Card from './Components/UI/Card';
 import Modal from './Components/Modal';
-import { CartContext } from './CartContext';
 import Cart from './Components/Cart/Cart';
+import { useCart } from './CartContext';
 import './style.css';
 
 const App = () => {
-  const { addToCart, cartLength } = useContext(CartContext);
   const [products, setProducts] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const { addToCart, openCartModal, cartLength, isCartModalOpen, isThankYouModalOpen, closeThankYouModal } = useCart();
 
   const addProduct = (product) => {
     setProducts([...products, product]);
@@ -39,12 +35,18 @@ const App = () => {
       <Card>
         <ProductList products={products} updateCart={updateCart} />
       </Card>
-      <button className="cart-button" onClick={openModal}>
+      <button className="cart-button" onClick={openCartModal}>
         Cart {cartLength}
       </button>
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
+      {isCartModalOpen && (
+        <Modal>
           <Cart />
+        </Modal>
+      )}
+      {isThankYouModalOpen && (
+        <Modal>
+          <h2>Thank You for Your Purchase!</h2>
+          <button onClick={closeThankYouModal}>Close</button>
         </Modal>
       )}
     </Card>

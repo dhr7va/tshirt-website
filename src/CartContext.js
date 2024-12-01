@@ -1,9 +1,18 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
-export const CartContext = createContext();
+const CartContext = createContext();
+
+export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
+
+  const openCartModal = () => setIsCartModalOpen(true);
+  const closeCartModal = () => setIsCartModalOpen(false);
+  const openThankYouModal = () => setIsThankYouModalOpen(true);
+  const closeThankYouModal = () => setIsThankYouModalOpen(false);
 
   const addToCart = (item) => {
     setCartItems((prevItems) => {
@@ -21,6 +30,33 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  const incrementItem = (item) => {
+    setCartItems((prevItems) =>
+      prevItems.map((cartItem) =>
+        cartItem.name === item.name && cartItem.size === item.size
+          ? { ...cartItem, quantity: cartItem.quantity + 1 }
+          : cartItem
+      )
+    );
+  };
+
+  const decrementItem = (item) => {
+    setCartItems((prevItems) =>
+      prevItems
+        .map((cartItem) =>
+          cartItem.name === item.name && cartItem.size === item.size
+            ? { ...cartItem, quantity: Math.max(cartItem.quantity - 1, 0) }
+            : cartItem
+        )
+        .filter((cartItem) => cartItem.quantity > 0)
+    );
+  };
+
+  const handleProceed = () => {
+    setCartItems([]);
+    closeCartModal();
+    openThankYouModal();
+  };
 
   const cartLength = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -32,9 +68,18 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
+        isCartModalOpen,
+        isThankYouModalOpen,
+        openCartModal,
+        closeCartModal,
+        openThankYouModal,
+        closeThankYouModal,
         addToCart,
+        incrementItem,
+        decrementItem,
+        handleProceed,
         cartLength,
-        calculateTotal
+        calculateTotal,
       }}
     >
       {children}
